@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.example.post.model.Post;
+import com.example.post.model.posts.Post;
 import com.example.post.repository.PostRepository;
 
 import lombok.RequiredArgsConstructor;

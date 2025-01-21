@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.post.model.User;
+import com.example.post.model.users.User;
 
 @Repository
 public class UserRepository {
@@ -30,6 +30,12 @@ public class UserRepository {
 	// 모든 User 조회
 	public List<User> findAll(){
 		return new ArrayList<>(store.values());
+	}
+
+	public User findByUsername(String username) {
+//		for(store.values() : )
+		
+		return null;
 	}
 
 }

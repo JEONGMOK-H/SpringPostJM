@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.ui.Model;
 
-import com.example.post.model.Post;
+import com.example.post.model.posts.Post;
 
 
 public interface PostRepository {

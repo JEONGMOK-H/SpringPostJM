@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.post.model.User;
+import com.example.post.model.users.User;
 import com.example.post.repository.UserRepository;
 
 @Service // 컴포넌트 스캔 대상으로 만들기 + 서비스로 만들기
@@ -47,4 +47,13 @@ public class UserService {
 	public List<User> getAllUsers(){
 		return userRepository.findAll();
 	}
+
+	
+	// username으로 User 찾기
+	public User getUserByUsername(String username) {
+		User findUser = userRepository.findByUsername(username);
+		return findUser;
+	}
+	
+	// comittest
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
-import com.example.post.model.Post;
+import com.example.post.model.posts.Post;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {

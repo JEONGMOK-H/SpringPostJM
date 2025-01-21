@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.post.model.User;
+import com.example.post.model.users.User;
 import com.example.post.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,47 +24,69 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	//회원가입 페이지 요청 처리
-	@GetMapping(path = "register")
+	// 회원가입 페이지 요청 처리
+	@GetMapping("users/register")
 	public String resister() {
 		
-		return "register";
+		return "users/register";
 	}
 	 
-	//회원가입 요청처리
-	@PostMapping(path = "register_v3")
+	// 회원가입 요청처리
+	@PostMapping("users/register")
 	public String registerUser(
 		@ModelAttribute	User user) {
+		log.info("----POST 회원가입 메서드 시작-----");
 		log.info("user : {}" , user);
 		User registedUser = userService.registerUser(user);
 		
 		log.info("registedUser : {}" , registedUser);
 		
-		return "register_success";
+		return "redirect:/";
 	}
 	
-	// ID로 회원정보 조회하기
-	@GetMapping(path = "user-details/{id}")
-	public String userDetails(
-		@PathVariable(name = "id") Long id,
-		Model model) {
+	// 로그인 페이지이동
+	@GetMapping("users/login")
+	public String loginFrom() {
 		
-		User user = userService.getUserById(id);
-		
-		//검색한 User 정보를 Model에 담는다 
-		model.addAttribute("user", user);
-		
-		return "user_detail";
+		return "users/login";
 	}
 	
-	// User List 
-	@GetMapping(path = "user-list")
-	public String userList(Model model) {
-		model.addAttribute("users", userService.getAllUsers());
+	// 로그인
+	@PostMapping("users/login")
+	public String login(
+			@ModelAttribute User user,
+			HttpServletRequest request) {
 		
-		return "user_list";
+		log.info("-----POST : login-----");
+		userService.getUserByUsername(user.getUsername());
+		
+		// Request 객체에 저장되있는 Session 객체를 받아온다
+		HttpSession session = request.getSession();
+		
+		// session 에 로그인정보 저장
+		session.setAttribute("loginUsername", null);
+		session.setAttribute("loginPassword", null);
+		
+		
+		
+		
+		return "redirect:/";
+	}
+	
+	//session 정보 확인
+	@ResponseBody
+	@GetMapping("logincheck")
+	public String loginCheck(HttpServletRequest request) {
+		log.info("----로그인체크-----");
+		HttpSession session = request.getSession();
+		String loginUsername = (String)session.getAttribute("loginUsername"); 
+		// 오브젝트로 반환되서 형변환 필요
+		// 오브젝트 -> 스트링 형변환 : 자식개체로 형변환이므로 (大→小형 변환) 강제형 변환 필요
+		log.info("loginUsername : {} ", loginUsername);
+		
+		
+		return "ㅇㅋ";
 	}
 
-
-
+	
 }

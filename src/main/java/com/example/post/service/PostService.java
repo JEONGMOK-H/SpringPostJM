@@ -48,15 +48,11 @@ public class PostService {
 	}
 	
 	// 글 삭제
-//	public void removePost(Long postId, String password) {
-//		//글 조회
-//		Post findPost = postRepository.findPostByid(postId);
-//		if(findPost.getPassword().equals(password)) {
-//			postRepository.removePost(postId,password);
-//			
-//		}
-//		
-//	}
+	public void removePost(Long postId) {
+		//글 조회
+		postRepository.removePost(postId);
+		
+	}
 
 	
 	

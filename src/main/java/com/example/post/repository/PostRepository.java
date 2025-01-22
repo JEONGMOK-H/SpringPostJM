@@ -21,6 +21,6 @@ public interface PostRepository {
 	void updatePost(Post post);
 	
 	// 글 삭제
-	void removePost(Long postId, String password);
+	void removePost(Long postId);
 
 }

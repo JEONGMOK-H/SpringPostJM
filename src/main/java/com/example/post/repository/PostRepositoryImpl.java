@@ -45,7 +45,7 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
-	public void removePost(Long postid, String password) {
+	public void removePost(Long postid) {
 		posts.remove(postid);
 		
 	}

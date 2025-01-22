@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.example.post.model.posts.Post;
@@ -75,11 +74,23 @@ public class PostController {
 		
 	}
 	
-	@PostMapping("posts/remove/{postId}")
+	// 게시글삭제
+	@GetMapping("posts/remove/{postId}")
 	public String removePost(
-			@PathVariable(name="postId") Long postId,
-			@RequestParam(name="password") String passowrd) {
-//		postService.removePost(postId, passowrd);	
+			@SessionAttribute(name="loginUser") User loginUser,
+			@PathVariable(name="postId") Long postId) {
+		
+		log.info("-----게시글삭제-----");
+		
+		// 삭제하려고하는 게시글이 로그인 사용자가 작성한 글인지확인
+		Post findPost = postService.getPostById(postId);
+		// 로그인 사용자와 작성자가 다르면 삭재하지않고 목록 패이지로 리다이렉트한다.
+		if(findPost == null || findPost.getUser().getId() != loginUser.getId()) {
+			return "redirect:/posts/";
+		}
+		
+		postService.removePost(postId);
+		
 		
 		
 	return "redirect:/posts";

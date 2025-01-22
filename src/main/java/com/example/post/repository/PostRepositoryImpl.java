@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
 import com.example.post.model.posts.Post;
+import com.example.post.model.users.User;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {

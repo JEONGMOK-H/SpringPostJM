@@ -58,14 +58,21 @@ public class UserController {
 			HttpServletRequest request) {
 		
 		log.info("-----POST : login-----");
-		userService.getUserByUsername(user.getUsername());
+		// username에 해당하는 User 객체를 찾는다
 		
-		// Request 객체에 저장되있는 Session 객체를 받아온다
+		User findUser = userService.getUserByUsername(user.getUsername());
+		log.info("findUser : {}", findUser);
+		
+		// 입력된 username, password가 DB에서 찾은 User 정보와 일치하는지 확인
+		if(findUser == null || !findUser.getPassword().equals(user.getPassword())) {
+			return "redirect:/users/login";
+		}
+		
+		// Request 객체에 저장되있는 Session 객체를 받아온다 ? 왜있는거지
 		HttpSession session = request.getSession();
 		
 		// session 에 로그인정보 저장
-		session.setAttribute("loginUsername", null);
-		session.setAttribute("loginPassword", null);
+		session.setAttribute("loginUser", findUser);
 		
 		
 		
@@ -86,6 +93,17 @@ public class UserController {
 		
 		
 		return "ㅇㅋ";
+	}
+	
+	// 로그아웃
+	@GetMapping("users/logout")
+	public String logout(HttpSession session) {
+		log.info("-----로그아웃-----");
+		
+//		session.setAttribute("loginUser", null);
+		session.invalidate();
+	
+		return "redirect:/";
 	}
 
 	

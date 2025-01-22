@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.example.post.model.posts.Post;
+import com.example.post.model.users.User;
 import com.example.post.repository.PostRepository;
+import com.example.post.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,7 @@ public class PostService {
 	
 	// 글저장
 	public Post savePost(Post post) {
-		log.info("서비스 시작 : SAVE POST");
+		log.info("서비스 : SAVE POST");
 		post.setCreateTime(LocalDateTime.now());
 		postRepository.savePost(post);
 		
@@ -45,16 +47,18 @@ public class PostService {
 		return findPost;
 	}
 	
-	public void removePost(Long postId,String password) {
-		//글 조회
-		Post findPost = postRepository.findPostByid(postId);
-		if(findPost.getPassword().equals(password)) {
-			postRepository.removePost(postId,password);
-			
-		}
-		
-		
-	}
+	// 글 삭제
+//	public void removePost(Long postId, String password) {
+//		//글 조회
+//		Post findPost = postRepository.findPostByid(postId);
+//		if(findPost.getPassword().equals(password)) {
+//			postRepository.removePost(postId,password);
+//			
+//		}
+//		
+//	}
+
+	
 	
 
 }

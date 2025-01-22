@@ -30,7 +30,7 @@
         <tr th:each ="post, postStat :${posts}">
             <td th:text ="${postStat.count}" ></td> 
             <td><a th:text="${post.title}" th:href ="@{/posts/{postId}(postId=${post.Id})}"></a></td>
-            <td th:text = "${post.username}" ></td>
+            <td th:text = "${post.user.username}" ></td>
             <td th:text = "${post.views}" ></td>
           	<td th:text = "${#temporals.format(post.createTime, 'dd-MM-yyy')}"></td>
           	

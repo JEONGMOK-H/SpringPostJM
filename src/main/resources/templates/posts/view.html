@@ -26,7 +26,7 @@
         </div>
         <div class="card-footer text-muted">
             <!-- 게시글 작성자, 조회수, 등록일 -->
-            <span th:text = "${post.username}" ></span> |
+            <span th:text = "${post.user.username}" ></span> |
             <span th:text = "${post.views}"></span>
             <span th:text = "${#temporals.format(post.createTime, 'dd-MM-yyy')}" >작성일: 2025-01-20</span>
         </div>

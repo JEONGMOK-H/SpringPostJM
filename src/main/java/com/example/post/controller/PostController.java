@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.example.post.model.posts.Post;
+import com.example.post.model.users.User;
 import com.example.post.service.PostService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,21 +25,30 @@ public class PostController {
 	
 	private final PostService postService;
 	
-	
+
 	@GetMapping(path = "/posts/create")
-	public String createPost() {
+	public String createPost(
+			// 세션에 저장되어있는 데이터 조회
+			@SessionAttribute(name="loginUser", required=false) User loginUser) {
 		
+		if(loginUser == null) {
+			log.info("loginUser: ${}", loginUser);
+			return "redirect:/users/login";
+		}
 	
 		return "posts/create";
 	}
 	
 	@PostMapping("posts")
 	public String savePost(
-			@ModelAttribute Post post) {
-		log.info("post {} : ", post);
+			@ModelAttribute Post post,
+			@SessionAttribute(name="loginUser") User loginUser) {
+		
+		log.info("-----PostMapping-----");
+		log.info("Post {} : ", post);
+		log.info("loginUser {} : ", loginUser);
+		post.setUser(loginUser);
 		postService.savePost(post); // Post 타입으로 리턴받았는데 그걸로 뭐하는가
-		log.info("post {} : ", post);
-		log.info("getCreateTime : {} : ", post.getCreateTime());
 
 		
 		return "redirect:/posts";
@@ -68,7 +79,7 @@ public class PostController {
 	public String removePost(
 			@PathVariable(name="postId") Long postId,
 			@RequestParam(name="password") String passowrd) {
-		postService.removePost(postId, passowrd);	
+//		postService.removePost(postId, passowrd);	
 		
 		
 	return "redirect:/posts";

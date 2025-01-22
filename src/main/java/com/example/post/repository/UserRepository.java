@@ -31,9 +31,13 @@ public class UserRepository {
 	public List<User> findAll(){
 		return new ArrayList<>(store.values());
 	}
-
+	// username 으로 User 조회
 	public User findByUsername(String username) {
-//		for(store.values() : )
+		for(User user :store.values()) {
+			if(user.getUsername().equals(username)) {
+				return user;
+			}
+		}
 		
 		return null;
 	}

@@ -2,14 +2,12 @@ package com.example.post.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.example.post.model.posts.Post;
-import com.example.post.model.users.User;
 import com.example.post.repository.PostRepository;
-import com.example.post.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +23,7 @@ public class PostService {
 	public Post savePost(Post post) {
 		log.info("서비스 : SAVE POST");
 		post.setCreateTime(LocalDateTime.now());
-		postRepository.savePost(post);
+		postRepository.save(post);
 		
 		
 		return post;
@@ -35,22 +33,44 @@ public class PostService {
 	public List<Post> getAllPosts() {
 		
 		
-		return postRepository.findAllPosts();
+		return postRepository.findAll();
 	}
 	
 	// 아이디로 글조회
 	public Post getPostById(Long postId) {
-		Post findPost = postRepository.findPostByid(postId);
-		findPost.incrementViews();
+		Optional<Post> findPost = postRepository.findById(postId);
+//		if(findPost.isPresent()) {
+//			Post post = findPost.get();
+//			post.incrementViews();
+//			
+//			return post;
+//		}
+//		new IllegalArgumentException("게시글 없음");
+//		
+//		return null;
+		
+		Post post = findPost.orElseThrow(
+				() -> new IllegalArgumentException("게시글 없음")); // 값이 있으면 return 하고 null 이면 외예발생
+		post.incrementViews();
+		return post;
 		
 		
-		return findPost;
 	}
 	
 	// 글 삭제
 	public void removePost(Long postId) {
 		//글 조회
-		postRepository.removePost(postId);
+		
+		Optional<Post> findPost = postRepository.findById(postId);
+		
+		Post post = findPost.orElseThrow(
+				() -> new IllegalArgumentException("게시글없음"));
+		
+		postRepository.delete(post);
+		
+		
+//		postRepository.deleteById(postId);
+		
 		
 	}
 

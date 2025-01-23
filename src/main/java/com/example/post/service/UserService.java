@@ -17,6 +17,13 @@ public class UserService {
 	 * 1. 필드주입
 	 * 2. 생성자 주입
 	 * 3. 세터주입
+	 * 
+	 * Spring Data Jpa 의 CRUD
+	 * Create 	: save(엔티티객체)
+	 * Read		: findById(엔티티객체의 아이디) , findAll() 모든객체 조회
+	 * Update	: 없음 (영속성 컨텍스트에서 더티체킹 으로 업데이트)
+	 * Delete	: delete(엔티티객체)
+	 * 
 	 */
 
 	@Autowired

@@ -95,5 +95,27 @@ public class PostController {
 		
 	return "redirect:/posts";
 	}
+	
+	// 게시글수정
+		@GetMapping("posts/edit/{postId}")
+		public String editPost(
+				@SessionAttribute(name="loginUser") User loginUser,
+				@PathVariable(name="postId") Long postId) {
+			
+			log.info("-----게시글수정-----");
+			
+			// 수정하려고하는 게시글이 로그인 사용자가 작성한 글인지확인
+			Post findPost = postService.getPostById(postId);
+			// 로그인 사용자와 작성자가 다르면 삭재하지않고 목록 패이지로 리다이렉트한다.
+			if(findPost == null || findPost.getUser().getId() != loginUser.getId()) {
+				return "redirect:/posts/";
+			}
+			
+			postService.editPost(postId);
+			
+			
+			
+		return "redirect:/posts/create";
+		}
 
 }

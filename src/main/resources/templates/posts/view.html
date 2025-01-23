@@ -45,6 +45,7 @@
 
     <!-- 로그인 사용자가 작성사용자가 같을 경우에만 수정,삭제 버튼이 보여야한다 -->
     <th:block th:if="${session.loginUser!= null and session.loginUser.id == post.user.id}" >
+    <a th:href="@{/posts/edit/{postId}(postId=${post.id})}" class="btn btn-danger mt-3" >tnwjd하기</a>
     <button type="button" class="btn btn-danger" th:onclick="|confirmDelete(${post.id})|">삭제하기</button>
 	</th:block>
     <!-- 뒤로 가기 버튼 -->

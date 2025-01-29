@@ -18,12 +18,12 @@
     <form action="/users/login" method="post" th:object="${userLoginForm}">
         <div class="mb-3">
             <label for="username" class="form-label">사용자명</label>
-            <input type="text" name="username" class="form-control" required>
+            <input type="text" class="form-control" required>
         </div>
         <div class="alert alert-danger"></div>
         <div class="mb-3">
             <label for="password" class="form-label">비밀번호</label>
-            <input type="password" name="password" class="form-control" required>
+            <input type="password" class="form-control" required>
         </div>
         <div class="alert alert-danger"></div>
         <button type="submit" class="btn btn-primary">로그인</button>

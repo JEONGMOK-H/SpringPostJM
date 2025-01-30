@@ -27,12 +27,12 @@
         </thead>
         <tbody>
         <!-- 서버에서 게시글 데이터를 동적으로 로드 -->
-        <tr>
-            <td>1</td>
-            <td><a href="/posts/1">제목</a></td>
-            <td>홍길동</td>
-            <td>5</td>
-            <td>2025-01-20</td>
+        <tr th:each="post, postStat : ${posts}">
+            <td th:text="${postStat.count}">1</td>
+            <td><a th:href="@{/posts/{postId}(postId=${post.Id})}" th:text="${post.title}">제목</a></td>
+            <td th:text="${post.user.username}">홍길동</td>
+            <td th:text="${post.views}">5</td>
+            <td th:text="${#temporals.format(post.createTime, 'dd-MM-yyyy')}">2025-01-20</td>
         </tr>
         </tbody>
     </table>

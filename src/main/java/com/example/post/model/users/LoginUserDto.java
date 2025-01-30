@@ -1,16 +1,12 @@
 package com.example.post.model.users;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class LoginUserDto {
 
     private String username;
     private String password;

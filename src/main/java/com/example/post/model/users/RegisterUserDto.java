@@ -1,16 +1,15 @@
 package com.example.post.model.users;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class RegisterUserDto {
 
     private String username;
     private String password;
@@ -20,4 +19,5 @@ public class User {
     private GenderType genderType;
     private LocalDate birthDate;
     private String email;
+
 }

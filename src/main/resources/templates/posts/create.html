@@ -14,22 +14,14 @@
 <div class="container my-5">
     <h2>게시글 작성</h2>
     <!-- 게시글 작성 폼 -->
-    <form action="/posts" method="post">
+    <form action="/posts/create" method="post" th:object="${createPostDto}">
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
-            <input type="text" class="form-control" id="title" name="title" required>
+            <input type="text" class="form-control" id="title" th:field="*{title}" name="title" required>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
-            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="username" class="form-label">작성자</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <textarea class="form-control" id="content" name="content" rows="5" th:field="*{content}" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">글쓰기</button>
     </form>

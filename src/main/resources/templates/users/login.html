@@ -15,15 +15,15 @@
     <h2>로그인</h2>
 
     <!-- 로그인 폼 -->
-    <form action="/users/login" method="post" th:object="${userLoginForm}">
+    <form action="/users/login" method="post" th:object="${loginUserDto}">
         <div class="mb-3">
             <label for="username" class="form-label">사용자명</label>
-            <input type="text" class="form-control" required>
+            <input type="text" class="form-control"  th:field="*{username}" required>
         </div>
         <div class="alert alert-danger"></div>
         <div class="mb-3">
             <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" required>
+            <input type="password" class="form-control" th:field="*{password}" required>
         </div>
         <div class="alert alert-danger"></div>
         <button type="submit" class="btn btn-primary">로그인</button>

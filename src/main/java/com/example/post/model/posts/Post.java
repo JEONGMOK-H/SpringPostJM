@@ -24,4 +24,8 @@ public class Post {
     private int views;
     private LocalDateTime createTime;
 
+    public void increaseViews(){
+        views++;
+    }
+
 }

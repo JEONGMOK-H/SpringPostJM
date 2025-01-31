@@ -18,10 +18,16 @@
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" id="title" th:field="*{title}" name="title" required>
+            <div th:if="${#fields.hasErrors('title')}" class="alert alert-danger mt-3">
+                <span th:errors="*{title}"></span>
+            </div>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
             <textarea class="form-control" id="content" name="content" rows="5" th:field="*{content}" required></textarea>
+            <div th:if="${#fields.hasErrors('content')}" class="alert alert-danger mt-3">
+                <span th:errors="*{content}"></span>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">글쓰기</button>
     </form>

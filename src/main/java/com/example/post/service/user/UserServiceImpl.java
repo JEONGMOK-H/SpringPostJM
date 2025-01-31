@@ -36,4 +36,23 @@ public class UserServiceImpl implements UserService {
         userRepository.save(registerUser);
 
     }
+
+    @Override
+    public boolean checkUsername(String username) {
+        log.info("-- 서비스 : username 중복체크");
+
+        // username 으로 User 찾기 (존재하는지확인)
+        User findUser = userRepository.findByUsername(username);
+
+        // 이미 있을때
+        if(findUser.getUsername() == username){
+            log.info("-- username 중복 있음");
+            return true;
+        }
+
+        //없을때
+        log.info("-- username 중복 없음");
+        return false;
+    }
+
 }

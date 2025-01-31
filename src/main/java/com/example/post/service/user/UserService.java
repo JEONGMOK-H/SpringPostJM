@@ -14,4 +14,6 @@ public interface UserService  {
 
     // 회원가입 처리
     public void registerUser(RegisterUserDto registerUserDto);
+
+    public boolean checkUsername(String username);
 }

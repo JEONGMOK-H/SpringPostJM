@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,9 +37,19 @@ public class UserController {
 
     // 로그인 받기
     @PostMapping("users/login")
-    public String login(@ModelAttribute LoginUserDto loginUserDto,
+    public String login(@ModelAttribute @Validated LoginUserDto loginUserDto,
+                        BindingResult bindingResult,
                         HttpServletRequest request){
         log.info("---- Post : 로그인 시작");
+
+        if (bindingResult.hasErrors()){
+            log.info("-- 벨리데이션 실패");
+
+            return "users/login";
+        }
+
+
+
         log.info("입력됨 : {}",loginUserDto);
 
         // 입력된 유저가 DB에 있는지 체크
@@ -46,7 +58,8 @@ public class UserController {
 
         if(findUser == null || !findUser.getPassword().equals(loginUserDto.getPassword())){
             log.info("-- null 이거나 패스워드 오류");
-            return "redirect:/users/login";
+            bindingResult.reject("loginFail","아이디 또는 비밀번호 오류");
+            return "users/login";
         }
 
         // 내가 보낸 request 객체에서 세션가져와서 HttpSession에 넣음
@@ -79,12 +92,29 @@ public class UserController {
 
     // 회원가입 POST
     @PostMapping("users/register")
-    public String register(@ModelAttribute RegisterUserDto registerUserDto){
+    public String register(@ModelAttribute @Validated RegisterUserDto registerUserDto,
+                           BindingResult bindingResult,
+                           Model model){
         log.info("---- POST : 회원가입");
+        // 벨리데이션
+        if(bindingResult.hasErrors()){
+            log.info("-- 벨리데이션 실패");
+            model.addAttribute("registerUserDto",registerUserDto);
+
+            return "users/register";
+        }
+
         log.info("입력됨 : {}",registerUserDto);
 
-        userService.registerUser(registerUserDto);
+        // 아이디 중복 확인 boolean 반환
+        boolean usernameTaken = userService.checkUsername(registerUserDto.getUsername());
 
+        if(usernameTaken){
+
+            return "";
+        }
+
+        userService.registerUser(registerUserDto);
 
         log.info("-- 회원가입성공");
 

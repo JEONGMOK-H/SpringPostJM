@@ -14,20 +14,30 @@
 <div class="container my-5">
     <h2>로그인</h2>
 
+
+
     <!-- 로그인 폼 -->
     <form action="/users/login" method="post" th:object="${loginUserDto}">
         <div class="mb-3">
             <label for="username" class="form-label">사용자명</label>
             <input type="text" class="form-control"  th:field="*{username}" required>
+            <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger mt-3">
+                <span th:errors="*{username}"></span>
+            </div>
         </div>
-        <div class="alert alert-danger"></div>
         <div class="mb-3">
             <label for="password" class="form-label">비밀번호</label>
             <input type="password" class="form-control" th:field="*{password}" required>
+            <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger mt-3">
+                <span th:errors="*{password}"></span>
+            </div>
         </div>
-        <div class="alert alert-danger"></div>
         <button type="submit" class="btn btn-primary">로그인</button>
+        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mt-3">
+            <span th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
+        </div>
     </form>
+
 </div>
 
 <!-- Bootstrap JS 및 의존성 스크립트 추가 -->

@@ -15,36 +15,30 @@
     <h2>게시글 읽기</h2>
 
     <!-- 게시글 상세 내용 -->
+    <th:block th:object="${post}">
     <div class="card">
         <div class="card-header">
             <!-- 게시글 제목 -->
-             <h3>제목</h3>
+             <h3 th:text="*{title}">제목</h3>
         </div>
         <div class="card-body">
             <!-- 게시글 내용 -->
-             <p>내용</p>
+             <p th:text="*{content}" >내용</p>
         </div>
         <div class="card-footer text-muted">
             <!-- 게시글 작성자, 조회수, 등록일 -->
-            <span>작성자: 홍길동</span> |
-            <span>조회 수: 5</span> |
-            <span>작성일: 2025-01-20</span>
+            <span th:text="*{user.username}" >작성자: 홍길동</span> |
+            <span th:text="*{views}" >조회 수: 5</span> |
+            <span th:text="*{createTime}">작성일: 2025-01-20</span>
         </div>
     </div>
-
-    <!-- 게시글 삭제 폼 -->
-    <div class="mt-4">
-        <h4>게시글 삭제</h4>
-        <form th:action="@{/posts/remove/{id}(id=${post.id})}" method="post">
-            <div class="mb-3">
-                <label for="password" class="form-label">비밀번호</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-danger">삭제하기</button>
-        </form>
-    </div>
+    </th:block>
 
     <!-- 뒤로 가기 버튼 -->
+    <th:block th:if="${session.loginUser}">
+        <a th:href="@{edit/{postId}(postId=${post.id})}" class="btn btn-secondary mt-3">수정하기</a>
+        <a th:href="@{remove/{postId}(postId=${post.id})}" class="btn btn-danger mt-3">삭제하기</a>
+    </th:block>
     <a href="/posts" class="btn btn-secondary mt-3">목록으로 돌아가기</a>
 </div>
 
